@@ -49,7 +49,7 @@ export default function App() {
         method: 'POST',
         headers: {
           'Accept': 'application/vnd.github+json',
-          'Authorization': 'Bearer YOUR_GITHUB_TOKEN',
+          'Authorization': `Bearer ${import.meta.env.VITE_GITHUB_TOKEN || ''}`,
           'X-GitHub-Api-Version': '2022-11-28',
         },
         body: JSON.stringify({ ref: 'main' }),
