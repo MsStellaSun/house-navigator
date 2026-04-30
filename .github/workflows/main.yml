@@ -46,7 +46,11 @@ jobs:
         run: npm install
 
       - name: Build Web App
-        run: npm run build # 编译 React 项目
+        run: |
+          echo "VITE_GITHUB_TOKEN=$VITE_GITHUB_TOKEN" > .env
+          npm run build
+        env:
+          VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
 
       - name: Copy Data to Dist (Important for static access)
         run: cp scraped_data.json dist/ 
