@@ -20,39 +20,31 @@ export default function App() {
   }, []);
 
   const fetchHouses = async () => {
-    setLoading(true);
+    // 改为直接读取静态 JSON 文件
     try {
-      const res = await fetch('/api/houses');
+      const res = await fetch('./scraped_data.json');
       const data = await res.json();
       if (data.houses && data.houses.length > 0) {
         setHouses(data.houses);
         setLastUpdated(data.lastUpdated);
-        // Default select first house
         if (!selectedHouse) setSelectedHouse(data.houses[0]);
       } else {
-        // Fallback to static data if API is empty
         setHouses(SHANGHAI_HOUSES);
-        if (!selectedHouse) setSelectedHouse(SHANGHAI_HOUSES[0]);
       }
     } catch (error) {
-      console.error("Failed to fetch houses:", error);
+      console.error("无法读取爬取数据，切换至备用数据:", error);
       setHouses(SHANGHAI_HOUSES);
     } finally {
       setLoading(false);
     }
   };
 
-  const syncData = async () => {
-    try {
-      await fetch('/api/crawl', { method: 'POST' });
-      alert("同步指令已发出。系统将开始抓取链家、安居客等公开数据。抓取完成后数据将自动更新。");
-      fetchHouses();
-    } catch (err) {
-      alert("同步失败，请检查网络");
-    }
+  const syncData = () => {
+    window.open('https://github.com/MsStellaSun/house-navigator/actions', '_blank');
   };
 
   const filteredHouses = useMemo(() => {
+    if (!houses || houses.length === 0) return [];
     let result = houses.filter(house => {
       const matchDistrict = selectedDistrict === 'All' || house.district === selectedDistrict;
       const matchStatus = selectedStatus === 'All' || house.salesStatus === selectedStatus;
@@ -68,7 +60,16 @@ export default function App() {
     }
 
     return result;
-  }, [selectedDistrict, selectedStatus, sortBy, searchQuery]);
+  }, [houses, selectedDistrict, selectedStatus, sortBy, searchQuery]);
+
+  if (loading) {
+    return (
+      <div className="h-screen w-screen flex flex-col items-center justify-center bg-white">
+        <div className="w-12 h-12 border-4 border-slate-900 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-slate-400 text-sm font-medium animate-pulse uppercase tracking-widest">上海新房导航正在加载数据...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen bg-slate-50 overflow-hidden font-sans">
@@ -152,11 +153,11 @@ export default function App() {
               className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-600 hover:bg-slate-100 hover:border-slate-300 transition-all font-medium"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
-              同步网上房地产数据
+              立即跳转 GitHub 触发同步
             </button>
             <p className="text-[9px] text-slate-400 mt-2 px-1 text-center leading-relaxed">
               数据源: fangdi.com.cn<br/>
-              * 爬取官方数据需处理图形验证码 
+              * 在 GitHub Actions 中自动运行爬虫
             </p>
           </div>
         </aside>
