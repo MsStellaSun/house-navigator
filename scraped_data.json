@@ -1,0 +1,80 @@
+{
+  "source": "上海市网上房地产 (www.fangdi.com.cn)",
+  "lastUpdated": "2026-04-30 04:01:05",
+  "houses": [
+    {
+      "id": "FD_2024_001",
+      "name": "宸嘉100·嘉佰道",
+      "district": "普陀区",
+      "address": "上海市普陀区光复西路（备案名：宸汇名邸）",
+      "averagePrice": 104000,
+      "totalPriceRange": [
+        1100,
+        3500
+      ],
+      "developer": "上海宸汇名邸房地产开发有限公司",
+      "salesStatus": "在售",
+      "launchDate": "2024-04-20",
+      "restrictionRules": "触发5年限售，官方积分入围制",
+      "schoolInfo": "对口苏河湾实验教育资源（以当年公示为准）",
+      "tags": [
+        "苏河湾",
+        "内环内",
+        "滨水住宅"
+      ],
+      "unitTypes": [
+        {
+          "name": "3室2厅2卫",
+          "area": 103,
+          "priceLabel": "约1060万"
+        },
+        {
+          "name": "4室2厅3卫",
+          "area": 190,
+          "priceLabel": "约2000万"
+        }
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1541339907198-e08756cdfb3f?auto=format&fit=crop&q=80&w=1000",
+      "description": "位于苏州河核心段，是普陀区少有的内环内高品质艺术社区。",
+      "sourceUrl": "https://www.fangdi.com.cn/new_house/new_house.html",
+      "permitNumber": "普陀房管(2024)预字0000108号"
+    },
+    {
+      "id": "FD_2024_002",
+      "name": "安高·中环曙光",
+      "district": "浦东新区",
+      "address": "浦东新区唐镇（备案名：曙光家园）",
+      "averagePrice": 72000,
+      "totalPriceRange": [
+        700,
+        1500
+      ],
+      "developer": "上海安高中环地产",
+      "salesStatus": "在售",
+      "launchDate": "2024-03-30",
+      "restrictionRules": "产证不满5年不得交易",
+      "schoolInfo": "周边规划唐镇优质基础教育配套",
+      "tags": [
+        "唐镇",
+        "地铁房",
+        "改善住宅"
+      ],
+      "unitTypes": [
+        {
+          "name": "3室2厅",
+          "area": 95,
+          "priceLabel": "约680万"
+        },
+        {
+          "name": "4室2厅",
+          "area": 130,
+          "priceLabel": "约930万"
+        }
+      ],
+      "coverImage": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1000",
+      "description": "唐镇核心区域，中环旁的优质国企开发楼盘。",
+      "sourceUrl": "https://www.fangdi.com.cn/new_house/new_house.html",
+      "permitNumber": "浦东房管(2024)预字0000095号"
+    }
+  ]
+}
