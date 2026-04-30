@@ -1,0 +1,64 @@
+name: Shanghai House Navigator CI/CD
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 每周一北京时间上午8点执行
+  workflow_dispatch: # 支持手动开启同步
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  all-in-one:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Python Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Crawler
+        run: python crawler.py # 抓取数据
+
+      - name: Commit Scraped Data back (Backup)
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add scraped_data.json
+          git commit -m "data: sync housing info $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install NPM Dependencies
+        run: npm install
+
+      - name: Build Web App
+        run: npm run build # 编译 React 项目
+
+      - name: Copy Data to Dist (Important for static access)
+        run: cp scraped_data.json dist/ 
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
